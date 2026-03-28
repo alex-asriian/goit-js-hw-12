@@ -43,8 +43,13 @@ form.addEventListener('submit', async (event) => {
       return;
     }
 
-    createGallery(data.hits); 
-    if (totalHits > 15) {
+      createGallery(data.hits); 
+      const maxPages = Math.ceil(totalHits / 15);
+      
+    if (totalHits > 0 && page >= maxPages) {
+      hideLoadMoreButton(); 
+      iziToast.info({ message: "We're sorry, but you've reached the end of search results." });
+    } else {
       showLoadMoreButton();
     }
   } catch (error) {
